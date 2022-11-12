@@ -8,26 +8,35 @@
                             Ciencias Top
                         </h3>
                         <div class="panel-body p-3">
-                            <form>
+                            <form [formGroup]="loginForm">
                                 <div class="form-group pt-3">
                                     <span>No. cuenta o trabajador</span>
                                     <div class="input-field">
                                         <span class="fa fa-user p-2"></span>
-                                        <input type="text" placeholder="0123456789">
+                                        <input formControlName="username" type="text" placeholder="0123456789">
                                     </div>
                                 </div>
+                                <small
+                                 *ngIf="loginForm.controls['username'].dirty && loginForm.hasError('required', 'username')"
+                                 class="text-danger">*Campo requerido</small>
                                 <div class="form-group pt-3">
                                     <span>Contraseña</span>
                                     <div class="input-field">
                                         <span class="fa fa-lock p-2"></span>
-                                        <input [type]="type" placeholder="•••••••">
+                                        <input formControlName="password" [type]="type" placeholder="•••••••">
                                         <span (click)="hideShowPass()" class="fa {{eyeIcon}}"></span>
                                     </div>
                                 </div>
+                                <small
+                                 *ngIf="loginForm.controls['password'].dirty && loginForm.hasError('required', 'password')"
+                                 class="text-danger">*Campo requerido</small>
                                 <div class="form-inline fr mt-4">
                                     <a id="forget" class="font-weight-bold">Reestablecer Contraseña</a>
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-block mt-4 w-100">Iniciar Sesión</button>
+                                <button 
+                                    (click) = "onSubmit()"
+                                    [disabled]="loginForm.invalid" type="submit" class="btn btn-primary btn-block mt-4 w-100">
+                                    Iniciar Sesión</button>
                             </form>
                         </div>
                     </div>

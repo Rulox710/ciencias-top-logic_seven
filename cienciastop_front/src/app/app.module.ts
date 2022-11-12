@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { ProductosComponent } from './productos/productos.component';
 import { InicioUiComponent } from './inicio-ui/inicio-ui.component';
 
+import  { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -14,7 +17,9 @@ import { InicioUiComponent } from './inicio-ui/inicio-ui.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
