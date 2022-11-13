@@ -23,6 +23,9 @@ public interface IUsuarioDao extends CrudRepository<Usuario, Integer> {
 	
 	@Query(value= "SELECT * FROM usuarios WHERE correo = :correo", nativeQuery = true)
 	Usuario encontrarPorCorreo(@Param("correo") String correo);
+
+	@Query(value= "SELECT * FROM usuarios WHERE nombre = :nombre", nativeQuery = true)
+	Usuario encontrarPorNombre(@Param("nombre") String nombre);
 	
 	@Modifying
 	@Transactional

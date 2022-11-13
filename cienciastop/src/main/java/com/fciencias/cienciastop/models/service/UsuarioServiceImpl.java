@@ -31,6 +31,24 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	}
 
 	@Override
+	@Transactional(readOnly=true)
+	public Usuario buscarUsuarioPorNombre(String nombre) {
+		Usuario usuario = usuarioDao.encontrarPorNombre(nombre);
+		if(usuario == null) 
+			return null;// excepcion no hay usuario 
+		return usuario;
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public Usuario buscarUsuarioPorCorreo(String correo) {
+		Usuario usuario = usuarioDao.encontrarPorCorreo(correo);
+		if(usuario == null) 
+			return null;// excepcion no hay usuario 
+		return usuario;
+	}
+
+	@Override
 	@Transactional
 	public Usuario guardar(Usuario usuario) {
 		Usuario usuarioGuardado = usuarioDao.encontrarPorCorreo(usuario.getCorreo());

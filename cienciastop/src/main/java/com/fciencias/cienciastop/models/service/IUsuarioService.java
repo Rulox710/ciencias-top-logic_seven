@@ -8,6 +8,10 @@ public interface IUsuarioService {
 	public List<Usuario> verUsuarios();
 	
 	public Usuario buscarUsuarioPorNoCT(int noCT);
+
+	public Usuario buscarUsuarioPorNombre(String nombre);
+
+	public Usuario buscarUsuarioPorCorreo(String correo);
 	
 	public Usuario guardar(Usuario usuario);
 	

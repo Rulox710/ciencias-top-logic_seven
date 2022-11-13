@@ -37,6 +37,16 @@ public class UsuarioRestController {
 	}
 	
 	@GetMapping("/usuarios/{noCT}")
+	public Usuario buscarUsuarioC(@PathVariable String correo) {
+		return usuarioService.buscarUsuarioPorCorreo(correo);
+	}
+
+	@GetMapping("/usuarios/{noCT}")
+	public Usuario buscarUsuario(@PathVariable String nombre) {
+		return usuarioService.buscarUsuarioPorNombre(nombre);
+	}
+
+	@GetMapping("/usuarios/{noCT}")
 	public Usuario buscarUsuario(@PathVariable int noCT) {
 		return usuarioService.buscarUsuarioPorNoCT(noCT);
 	}
