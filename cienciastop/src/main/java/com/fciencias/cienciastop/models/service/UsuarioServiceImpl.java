@@ -15,15 +15,15 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	@Autowired
 	private IUsuarioDao usuarioDao;
 	
-	@Override
+	
 	@Transactional(readOnly=true)
 	public List<Usuario> verUsuarios() {
 		return (List<Usuario>) usuarioDao.encontrarPorStatus(1);
 	}
 
-	@Override
+	
 	@Transactional(readOnly=true)
-	public Usuario buscarUsuarioPorNoCT(int noCT) {
+	public Usuario buscarUsuarioPorNoCT(Long noCT) {
 		Usuario usuario = usuarioDao.encontrarPorNoCT(noCT);
 		if(usuario == null) 
 			return null;// excepcion no hay usuario 
@@ -32,8 +32,8 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public Usuario buscarUsuarioPorNombre(String nombre) {
-		Usuario usuario = usuarioDao.encontrarPorNombre(nombre);
+	public List<Usuario> buscarUsuarioPorNombre(String nombre) {
+		List<Usuario> usuario = usuarioDao.encontrarPorNombre(nombre);
 		if(usuario == null) 
 			return null;// excepcion no hay usuario 
 		return usuario;
@@ -49,27 +49,35 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	}
 
 	@Override
+	
 	@Transactional
 	public Usuario guardar(Usuario usuario) {
-		Usuario usuarioGuardado = usuarioDao.encontrarPorCorreo(usuario.getCorreo());
+		Usuario usuarioGuardado = usuarioDao.encontrarPorCorreo(usuario.getCorreo());		
 		if(usuarioGuardado != null) {
-			if(usuarioGuardado.getStatus() == 0) {
-				if(usuarioDao.activar(usuario.getNoCT()) == 1) return null;//usuarioGuardado;
+			if(usuarioGuardado.getStatus() == 0) {				
+				usuarioDao.activar(usuario.getNoCT());				
+				return usuarioDao.encontrarPorNoCT(usuario.getNoCT());
 			} else {
-				// ya existe. no guardar
+				return usuarioGuardado;
 			}
-		} else return usuarioDao.save(usuario);
-		return null;
+		} 
+		return usuarioDao.save(usuario);		
 	}
 
-	@Override
-	public int borrar(int noCT) {
+	
+	public int borrar(Long noCT) {
 		Usuario usuarioGuardado = usuarioDao.encontrarPorNoCT(noCT);
 		if(usuarioGuardado == null) {
 			return 0;
 		} else {
 			return usuarioDao.desactivar(noCT);
 		}
+	}
+
+	@Override
+	@Transactional
+	public Usuario editar(Usuario usuario) {
+		return usuarioDao.save(usuario);
 	}
 
 }
